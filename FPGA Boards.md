@@ -20,6 +20,8 @@ Für die AMD / Xilinx UltraScale/UltraScale+ Serie:
 - 1 CLB entspricht 1 Logic Slice
 - 1 System Logic Cell entspricht ungefähr 0.459 LUT6
 
+Quelle zur Einheiten Konvertierung: https://adaptivesupport.amd.com/s/question/0D52E00006hpm0xSAA/sysem-logic-cells
+
 ## Ausgewählte Anbieter
 
 https://digilent.com/
