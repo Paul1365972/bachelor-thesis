@@ -1,0 +1,132 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage{english}
+\usepackage{lmodern}
+
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage[skip=1.2em]{parskip}
+
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+
+\usepackage{enumitem}
+\usepackage{url}
+\usepackage[colorlinks=true, allcolors=black]{hyperref}
+\usepackage{tabularx, multirow, colortbl}
+\usepackage{graphicx}
+\usepackage{pdfpages}
+\usepackage[backend=biber, style=numeric]{biblatex}
+
+\newcolumntype{L}{>{$}l<{$}}
+\newcolumntype{C}{>{$}c<{$}}
+\newcolumntype{R}{>{$}r<{$}}
+
+\begin{filecontents}{\jobname.bib}
+@book{zobel2015,
+  author    = {Justin Zobel},
+  title     = {Writing for Computer Science},
+  edition   = {3rd},
+  publisher = {Springer Publishing Company, Incorporated},
+  year      = {2015},
+  isbn      = {1447166388}
+}
+\end{filecontents}
+
+\addbibresource{\jobname.bib}
+
+%%% Start of Document
+
+\thispagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+    \vspace*{1cm}
+
+    {\Huge\bfseries Working Title for your Thesis\par}
+
+    \vspace{1.5cm}
+
+    {\Large\bfseries Name of Student\par}
+
+    \vspace{1.5cm}
+
+    {\Large Exposé for a Bachelor's thesis\par}
+
+    \vspace{1.5cm}
+
+    \includegraphics[width=7cm]{fig/hhu.pdf}
+
+    \vspace{0.5cm}
+
+    {\large
+        Algorithmic Bioinformatics \par
+        Heinrich Heine University Düsseldorf, Germany \par
+        \today \par
+    }
+
+    \vspace{1cm}
+\end{center}
+
+\begin{itemize}[leftmargin=2cm, labelsep=0.5em, before=\large]
+    \item Formal supervisor: Name
+    \item Daily supervisor: Name
+    \item Suggestion for Zweitgutachter: Name, or leave empty
+    \item Desired starting date: Date
+\end{itemize}
+
+\vspace{2cm}
+
+\clearpage
+
+\setcounter{page}{2}
+\pagestyle{plain}
+
+This document may serve as a template for your exposé. Write it in the same language you choose for your thesis, that is, English or German. In case of German, you will have to adapt the template. It will usually consist of two to three but not more than four pages in addition to title page and references and clearly describe the topic of your thesis, background and related work, the methodology you will apply to approach it as well as a time plan. Submit it to your supervisors once you are happy with it. Do apply a spell checker (e.g., \texttt{aspell -c -t}) and the tool \texttt{lacheck} before. It may take one or two iterations until the exposé is acceptable, in which case you should register your thesis.
+
+The exposé helps us because it shows that you are devoted to and enthusiastic about your topic. It also gives us a first impression of how advanced your scientific writing skills are. Note that the quality of the exposé will not be relevant for the final grade of the thesis. In addition, the exposé serves as some form of contract as it defines what should be covered in the thesis and what not.
+
+Feel free to change any settings in the LaTeX code like fonts, spacing etc.
+
+\section*{1 Scientific Background and Motivation}
+Describe the background that is relevant for your work. Give the context. What motivates your topic?
+
+\section*{2 Problem Statement}
+Formulate a clear research question, maybe break down into sub-questions. Why is the research question relevant?
+
+\section*{3 Related Work}
+Try to describe the state-of-the-art regarding your research question. Do a first literature review and cite any literature you find relevant. Has this problem (or related ones) already been looked at by other researchers? Does this work build on a previous thesis/publication? At this point, the literature review does not have to be complete, but it will have to be in the thesis.
+
+\section*{4 Methodology}
+How are you going to approach the problem? What are relevant affected research areas and which theories will you likely use? Are you going to develop a new method or are you applying other methods? What will you implement, in which language and which interfaces are you planning to use? How are you going to evaluate your work?
+
+Also list any optional things you may want to do if time permits.
+
+\clearpage
+
+\section*{5 Resources}
+What resources are needed (e.g., data, access to high-performance computing)? Include in time plan (see below) how and when they will be organized.
+
+\section*{6 Obstacles and Difficulties}
+Identify obstacles and difficulties in your planned research, for example, are there skills you still have to develop? Describe how they could be addressed.
+
+\section*{7 Rough Time Schedule}
+Plan all steps necessary to answer your research question, including important milestones. Describe, as clearly as possible, how you will address your research question. Plan for sickness and vacations and leave buffer space for “the unexpected”. Also, calculate with response times of one week for feedback from supervisors or other people.
+
+\section*{8 Supervision}
+What is the agreed method of working together with your supervisor(s)? This could be, e.g., weekly meetings accompanied by discussions in the mattermost channel.
+
+\section*{9 Literature}
+Use biber for managing the references as in this template, which is compiled with the following commands:
+\begin{verbatim}
+xelatex expose.tex
+biber expose
+xelatex expose.tex
+\end{verbatim}
+The book \cite{zobel2015} is a great resource for scientific writing in the area of computer science. Consulting this book is always a good idea.
+
+\printbibliography[title=References]
+
+\end{document}
