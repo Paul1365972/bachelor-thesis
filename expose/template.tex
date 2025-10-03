@@ -17,23 +17,13 @@
 \usepackage{tabularx, multirow, colortbl}
 \usepackage{graphicx}
 \usepackage{pdfpages}
+\usepackage[backend=bibtex, style=numeric]{biblatex}
 
 \newcolumntype{L}{>{$}l<{$}}
 \newcolumntype{C}{>{$}c<{$}}
 \newcolumntype{R}{>{$}r<{$}}
 
-\begin{filecontents}{\jobname.bib}
-@book{zobel2015,
-  author    = {Justin Zobel},
-  title     = {Writing for Computer Science},
-  edition   = {3rd},
-  publisher = {Springer Publishing Company, Incorporated},
-  year      = {2015},
-  isbn      = {1447166388}
-}
-\end{filecontents}
-
-\addbibresource{\jobname.bib}
+\addbibresource{references.bib}
 
 %%% Start of Document
 
@@ -44,15 +34,17 @@
 \begin{center}
     \vspace*{1cm}
 
-    {\Huge\bfseries Working Title for your Thesis\par}
+    {\Huge\bfseries Working Title for your Thesis}
+
+    {\Large\bfseries Optional subtitle}
 
     \vspace{1.5cm}
 
-    {\Large\bfseries Name of Student\par}
+    {\Large\bfseries Name of Student}
 
     \vspace{1.5cm}
 
-    {\Large Exposé for a Bachelor's thesis\par}
+    {\Large Exposé for a Bachelor's thesis}
 
     \vspace{1.5cm}
 
@@ -61,7 +53,7 @@
     \vspace{0.5cm}
 
     {\large
-        Algorithmic Bioinformatics \par
+        Some course of study \par
         Heinrich Heine University Düsseldorf, Germany \par
         \today \par
     }
@@ -80,7 +72,6 @@
 
 \clearpage
 
-\setcounter{page}{2}
 \pagestyle{plain}
 
 This document may serve as a template for your exposé. Write it in the same language you choose for your thesis, that is, English or German. In case of German, you will have to adapt the template. It will usually consist of two to three but not more than four pages in addition to title page and references and clearly describe the topic of your thesis, background and related work, the methodology you will apply to approach it as well as a time plan. Submit it to your supervisors once you are happy with it. Do apply a spell checker (e.g., \texttt{aspell -c -t}) and the tool \texttt{lacheck} before. It may take one or two iterations until the exposé is acceptable, in which case you should register your thesis.

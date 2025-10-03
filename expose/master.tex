@@ -17,24 +17,13 @@
 \usepackage{tabularx, multirow, colortbl}
 \usepackage{graphicx}
 \usepackage{pdfpages}
-\usepackage[backend=biber, style=numeric]{biblatex}
+\usepackage[backend=bibtex, style=numeric]{biblatex}
 
 \newcolumntype{L}{>{$}l<{$}}
 \newcolumntype{C}{>{$}c<{$}}
 \newcolumntype{R}{>{$}r<{$}}
 
-\begin{filecontents}{\jobname.bib}
-@book{zobel2015,
-  author    = {Justin Zobel},
-  title     = {Writing for Computer Science},
-  edition   = {3rd},
-  publisher = {Springer Publishing Company, Incorporated},
-  year      = {2015},
-  isbn      = {1447166388}
-}
-\end{filecontents}
-
-\addbibresource{\jobname.bib}
+\addbibresource{references.bib}
 
 %%% Start of Document
 
@@ -45,15 +34,17 @@
 \begin{center}
     \vspace*{1cm}
 
-    {\Huge\bfseries Working Title for your Thesis\par}
+    {\Huge\bfseries MCHPRS on FPGA}
+
+    {\Large\bfseries High-Performance Simulation of Virtual Logic Systems with Real-Time Interactive Control via FPGA-Based Hardware Acceleration}
 
     \vspace{1.5cm}
 
-    {\Large\bfseries Name of Student\par}
+    {\Large\bfseries Paul C. Dötsch}
 
     \vspace{1.5cm}
 
-    {\Large Exposé for a Bachelor's thesis\par}
+    {\Large Exposé for a Bachelor's thesis}
 
     \vspace{1.5cm}
 
@@ -62,7 +53,7 @@
     \vspace{0.5cm}
 
     {\large
-        Algorithmic Bioinformatics \par
+        Computer Science \par
         Heinrich Heine University Düsseldorf, Germany \par
         \today \par
     }
@@ -71,61 +62,115 @@
 \end{center}
 
 \begin{itemize}[leftmargin=2cm, labelsep=0.5em, before=\large]
-    \item Formal supervisor: Name
-    \item Daily supervisor: Name
-    \item Suggestion for Zweitgutachter: Name, or leave empty
-    \item Desired starting date: Date
+    \item Formal supervisor: John Witulski
+    \item Daily supervisor: TODO
+    \item Suggestion for Zweitgutachter: TODO
+    \item Desired starting date: 12.10.2025 \\
+    (TODO: Possibly later if it doesn't impact the date I finish my bachelors)
 \end{itemize}
 
 \vspace{2cm}
 
 \clearpage
 
-\setcounter{page}{2}
 \pagestyle{plain}
 
-This document may serve as a template for your exposé. Write it in the same language you choose for your thesis, that is, English or German. In case of German, you will have to adapt the template. It will usually consist of two to three but not more than four pages in addition to title page and references and clearly describe the topic of your thesis, background and related work, the methodology you will apply to approach it as well as a time plan. Submit it to your supervisors once you are happy with it. Do apply a spell checker (e.g., \texttt{aspell -c -t}) and the tool \texttt{lacheck} before. It may take one or two iterations until the exposé is acceptable, in which case you should register your thesis.
-
-The exposé helps us because it shows that you are devoted to and enthusiastic about your topic. It also gives us a first impression of how advanced your scientific writing skills are. Note that the quality of the exposé will not be relevant for the final grade of the thesis. In addition, the exposé serves as some form of contract as it defines what should be covered in the thesis and what not.
-
-Feel free to change any settings in the LaTeX code like fonts, spacing etc.
-
 \section*{1 Scientific Background and Motivation}
-Describe the background that is relevant for your work. Give the context. What motivates your topic?
+
+Minecraft's redstone system provides digital logic components analogous to real electronic circuits: redstone dust acts as wires, repeaters function as buffers with programmable delays, and redstone torches implement NOT gates.
+These components enable construction of complex digital systems including ALUs, memory, and complete CPUs, making redstone Turing-complete for computation.
+
+MCHPRS (Minecraft High-Performance Redstone Server) is a specialized server designed exclusively for computational redstone circuits.
+Unlike Minecraft's inefficient block-by-block simulation that operates at 20 Hz, MCHPRS transforms redstone circuits into directed weighted graphs and applies compiler-inspired optimizations through its "Redpiler" system, achieving simulation rates of 100 kHz to 2 MHz.
+
+Despite these improvements, MCHPRS users remain severely constrained by performance limitations that fundamentally restrict the complexity and functionality of achievable builds.
+Simulation times ranging from seconds to minutes, or even hours for complex circuits, create a significant barrier to iterative development and experimentation.
+This performance bottleneck forces builders to prioritize computational efficiency over functionality, leading to design compromises that limit innovation.
+
+The single-threaded nature of current simulation particularly impacts advanced architectures: pipelined CPU designs, while theoretically superior, actually perform worse than simpler non-pipelined implementations due to increased total computation overhead.
+This counter-intuitive reality constrains the redstone community to suboptimal design patterns that prioritize minimal computation over architectural sophistication.
+
+FPGA-based acceleration could fundamentally transform this landscape.
+The inherent parallelism of FPGAs would make previously impractical designs suddenly viable, allowing pipelined architectures to achieve their theoretical performance advantages.
+This shift would align Minecraft redstone circuits more closely with real-world digital systems, where design constraints focus on area, latency, throughput, and algorithmic efficiency rather than total computational burden.
+Such capabilities could unlock entirely new categories of complex builds and foster innovation in digital design education and experimentation.
 
 \section*{2 Problem Statement}
-Formulate a clear research question, maybe break down into sub-questions. Why is the research question relevant?
+
+The thesis will aim to develop an FPGA-based backend for MCHPRS targeting 10-100 MHz simulation rates, representing a multiple orders of magnitude improvement over current software-based simulation limits.
+The primary goal is maximizing simulation throughput by compiling Redpiler's optimized graph representations to synthesizable HDL.
+
+The research addresses three key questions:
+\begin{itemize}[parsep=0.5em]
+    \item How can existing Redpiler graph representations be compiled to hardware description language for FPGA implementation?
+    \item How can real-time interaction capabilities (debugging, simulation inputs, state observation) be maintained for FPGA-based logic simulation?
+    \item What additional redstone feature limitations are required for efficient FPGA mapping within resource constraints?
+\end{itemize}
+
+Secondary challenges include implementing controlled stepping mechanisms for debugging and determining acceptable limitations beyond MCHPRS's existing constraints to achieve practical FPGA implementation.
 
 \section*{3 Related Work}
-Try to describe the state-of-the-art regarding your research question. Do a first literature review and cite any literature you find relevant. Has this problem (or related ones) already been looked at by other researchers? Does this work build on a previous thesis/publication? At this point, the literature review does not have to be complete, but it will have to be in the thesis.
+
+This work builds upon MCHPRS \cite{mchprs}, an open-source project that has demonstrated significant performance improvements through software optimization.
+The Redpiler system's graph-based representation provides a foundation for hardware compilation.
+
+Logisim Evolution \cite{logisimevolution} demonstrates the feasibility of compiling graph-based logic representations to hardware.
+This graphical circuit design tool generates VHDL from component-based designs, showing practical approaches for logic-to-hardware compilation similar to what MCHPRS requires.
+
+FPGA acceleration of CPU-based simulations has demonstrated significant speedups across various domains, particularly in areas requiring high parallelism (TODO: What should I cite for this?).
+
+An existing hobby project, MCHPRS-RoC \cite{mchprsroc}, has explored redstone-to-hardware compilation over the past 8 months, targeting Cyclone V FPGAs using Intel's Quartus toolchain.
+While this project demonstrates the feasibility of hardware-based redstone simulation, it remains in early development stages and imposes significant fundamental constraints beyond MCHPRS's existing limitations.
+This thesis will take a different approach by targeting Xilinx FPGAs via the Vivado toolchain while preserving most of MCHPRS's current feature set and applying rigorous scientific evaluation methodologies to this domain.
 
 \section*{4 Methodology}
-How are you going to approach the problem? What are relevant affected research areas and which theories will you likely use? Are you going to develop a new method or are you applying other methods? What will you implement, in which language and which interfaces are you planning to use? How are you going to evaluate your work?
 
-Also list any optional things you may want to do if time permits.
+The implementation will roughly follow this approach:
 
-\clearpage
+\textbf{HDL Compiler Development:} Transform optimized Redpiler graphs into synthesizable Verilog/VHDL, mapping redstone components to corresponding hardware logic blocks.
+
+\textbf{Component Library Implementation:} Develop hardware models for redstone components ensuring proper timing behavior and signal propagation characteristics that match Minecraft / MCHPRS semantics.
+
+\textbf{Host-FPGA Interface:} Create communication protocols between host software and FPGA hardware for circuit control, input stimulation, and output monitoring.
+Embed debugging components into HDL generation, adding stepping controls and state observation points.
+
+\textbf{Synthesis Integration:} Integrate synthesis workflows and FPGA programming toolchains into MCHPRS, enabling automated compilation from redstone circuits to programmed hardware.
+
+\textbf{Evaluation:} Compare simulation performance, resource utilization, and behavioral compatibility against existing software simulation using representative redstone circuits of varying complexity.
+
+The Synthesis Integration step will likely need to be done incrementally during the first three steps.
 
 \section*{5 Resources}
-What resources are needed (e.g., data, access to high-performance computing)? Include in time plan (see below) how and when they will be organized.
+
+For the thesis a FPGA development board with corresponding HDL synthesis tools will be needed.
+While proof-of-concept can be demonstrated on smaller boards like Basys 3, comprehensive evaluation would benefit from boards with larger logic cell counts to accommodate complex redstone circuits and demonstrate the full potential of hardware acceleration (TODO: see \url{https://github.com/Paul1365972/bachelor-thesis/blob/main/FPGA\%20Boards.md}).
 
 \section*{6 Obstacles and Difficulties}
-Identify obstacles and difficulties in your planned research, for example, are there skills you still have to develop? Describe how they could be addressed.
+
+Key challenges include:
+\begin{itemize}[parsep=0.5em]
+    \item Mapping redstone timing semantics to synchronous hardware while preserving behavioral accuracy
+    \item FPGA resource limitations constraining implementable circuit size and complexity
+    \item Real-time bidirectional communication between host software and FPGA hardware
+    \item Limited prior experience with FPGA development tools and HDL synthesis workflows
+\end{itemize}
 
 \section*{7 Rough Time Schedule}
-Plan all steps necessary to answer your research question, including important milestones. Describe, as clearly as possible, how you will address your research question. Plan for sickness and vacations and leave buffer space for “the unexpected”. Also, calculate with response times of one week for feedback from supervisors or other people.
+
+\textbf{Month 1:} Literature review, FPGA toolchain setup, and basic HDL generation for simple redstone components.
+
+\textbf{Month 2:} Implementation of HDL compiler for complete redstone component set and timing model development.
+
+\textbf{Month 3:} FPGA backend integration with MCHPRS, stepping system implementation, host-FPGA communication protocols, comprehensive testing and evaluation.
 
 \section*{8 Supervision}
-What is the agreed method of working together with your supervisor(s)? This could be, e.g., weekly meetings accompanied by discussions in the mattermost channel.
+
+Weekly 30-minute meetings with supervisor to discuss progress, technical challenges, and design decisions.
+Meetings to be scheduled and cancelled with 24-hour advance notice.
 
 \section*{9 Literature}
-Use biber for managing the references as in this template, which is compiled with the following commands:
-\begin{verbatim}
-xelatex expose.tex
-biber expose
-xelatex expose.tex
-\end{verbatim}
-The book \cite{zobel2015} is a great resource for scientific writing in the area of computer science. Consulting this book is always a good idea.
+
+TODO: What would be included here? I would just remove it as it is already covered by related work.
 
 \printbibliography[title=References]
 
