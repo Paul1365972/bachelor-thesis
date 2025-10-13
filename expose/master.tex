@@ -7,7 +7,7 @@
 
 \usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
 \usepackage{fancyhdr}
-\usepackage[skip=1.2em]{parskip}
+\usepackage{parskip}
 
 \usepackage{amsmath, amssymb, amsthm, amsfonts}
 
@@ -36,6 +36,8 @@
 
     {\Huge\bfseries MCHPRS on FPGA}
 
+    \vspace{0.5cm}
+
     {\Large\bfseries High-Performance Simulation of Virtual Logic Systems with Real-Time Interactive Control via FPGA-Based Hardware Acceleration}
 
     \vspace{1.5cm}
@@ -50,7 +52,7 @@
 
     \includegraphics[width=7cm]{fig/hhu.pdf}
 
-    \vspace{0.5cm}
+    \vspace{1.0cm}
 
     {\large
         Computer Science \par
@@ -61,15 +63,13 @@
     \vspace{1cm}
 \end{center}
 
-\begin{itemize}[leftmargin=2cm, labelsep=0.5em, before=\large]
-    \item Formal supervisor: John Witulski
-    \item Daily supervisor: TODO
-    \item Suggestion for Zweitgutachter: TODO
-    \item Desired starting date: 12.10.2025 \\
-    (TODO: Possibly later if it doesn't impact the date I finish my bachelors)
-\end{itemize}
+\vspace{1.0cm}
 
-\vspace{2cm}
+\begin{itemize}[leftmargin=3cm, labelsep=0.5em, before=\large]
+    \item Supervisor: John Witulski
+    \item Zweitgutachter: Jens Bendisposto
+    \item Desired starting date: 31.10.2025
+\end{itemize}
 
 \clearpage
 
@@ -114,10 +114,10 @@ Secondary challenges include implementing controlled stepping mechanisms for deb
 This work builds upon MCHPRS \cite{mchprs}, an open-source project that has demonstrated significant performance improvements through software optimization.
 The Redpiler system's graph-based representation provides a foundation for hardware compilation.
 
-Logisim Evolution \cite{logisimevolution} demonstrates the feasibility of compiling graph-based logic representations to hardware.
-This graphical circuit design tool generates VHDL from component-based designs, showing practical approaches for logic-to-hardware compilation similar to what MCHPRS requires.
+Logisim Evolution \cite{logisimevolution}, a graphical circuit design and simulation tool, demonstrates the feasibility of compiling graph-based logic representations to hardware.
+This tool generates VHDL from component-based designs, providing a reference for practical logic-to-hardware compilation approaches that could be adapted for MCHPRS's redstone circuits.
 
-FPGA acceleration of CPU-based simulations has demonstrated significant speedups across various domains, particularly in areas requiring high parallelism (TODO: What should I cite for this?).
+FPGA acceleration of CPU-based simulations has demonstrated significant speedups across various domains, particularly in areas requiring high parallelism, with FPGA systems in certain cases achieving up to 346$\times$ speedup compared to even GPU-based implementations \cite[p. 14, Table 1]{fpgaaccelsurvey}.
 
 An existing hobby project, MCHPRS-RoC \cite{mchprsroc}, has explored redstone-to-hardware compilation over the past 8 months, targeting Cyclone V FPGAs using Intel's Quartus toolchain.
 While this project demonstrates the feasibility of hardware-based redstone simulation, it remains in early development stages and imposes significant fundamental constraints beyond MCHPRS's existing limitations.
@@ -142,14 +142,14 @@ The Synthesis Integration step will likely need to be done incrementally during 
 
 \section*{5 Resources}
 
-For the thesis a FPGA development board with corresponding HDL synthesis tools will be needed.
-While proof-of-concept can be demonstrated on smaller boards like Basys 3, comprehensive evaluation would benefit from boards with larger logic cell counts to accommodate complex redstone circuits and demonstrate the full potential of hardware acceleration (TODO: see \url{https://github.com/Paul1365972/bachelor-thesis/blob/main/FPGA\%20Boards.md}).
+The thesis will use a Basys 3 FPGA development board (32k logic cells) provided by the supervisor, along with the Xilinx Vivado toolchain for HDL synthesis.
+While this constrains the maximum circuit complexity compared to larger FPGAs, it provides sufficient resources for proof-of-concept implementation and evaluation of the hardware acceleration approach.
 
 \section*{6 Obstacles and Difficulties}
 
 Key challenges include:
 \begin{itemize}[parsep=0.5em]
-    \item Mapping redstone timing semantics to synchronous hardware while preserving behavioral accuracy
+    \item Mapping redstone timing semantics to synchronous hardware while preserving correctness
     \item FPGA resource limitations constraining implementable circuit size and complexity
     \item Real-time bidirectional communication between host software and FPGA hardware
     \item Limited prior experience with FPGA development tools and HDL synthesis workflows
@@ -168,9 +168,17 @@ Key challenges include:
 Weekly 30-minute meetings with supervisor to discuss progress, technical challenges, and design decisions.
 Meetings to be scheduled and cancelled with 24-hour advance notice.
 
+The supervisor will attempt to read and grade the thesis within the winter semester 2025/26, though this cannot be guaranteed.
+
 \section*{9 Literature}
 
-TODO: What would be included here? I would just remove it as it is already covered by related work.
+Beyond the references cited in related work, the thesis will draw upon:
+\begin{itemize}[parsep=0.5em]
+    \item Hardware description languages (Verilog, VHDL) and synthesis documentation
+    \item Xilinx Vivado toolchain documentation
+    \item MCHPRS source code and Redstone mechanics documentation
+    \item Compiler design principles (e.g., "Compilers: Principles, Techniques, and Tools")
+\end{itemize}
 
 \printbibliography[title=References]
 
